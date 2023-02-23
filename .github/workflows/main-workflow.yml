@@ -32,10 +32,7 @@ jobs:
       run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o receiver Receiver/*.c
       
     - name: run
-      run: ./receiver
-      
-    - name: print console
-      run: java -Dexec.mainClass="Sender.InputSender"
+      run: mvn -f ./pom.xml compile exec:java -Dexec.mainClass="Sender.InputSender" | ./receiver
 
     - name: collect coverage
       run: gcovr --gcov-exclude=".*src.*" -r . --html --html-details -o coverage.html --print-summary
