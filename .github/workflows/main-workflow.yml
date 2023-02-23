@@ -35,7 +35,7 @@ jobs:
       run: ./receiver
 
     - name: collect coverage
-      run: gcovr --gcov -r . --html --html-details -o coverage.html --print-summary
+      run: gcovr --gcov-exclude=".*src.*" -r . --html --html-details -o coverage.html --print-summary
 
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v2
