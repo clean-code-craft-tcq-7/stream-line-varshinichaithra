@@ -33,6 +33,9 @@ jobs:
       
     - name: run
       run: ./receiver
+      
+    - name: print console
+      run: java -Dexec.mainClass="Sender.InputSender"
 
     - name: collect coverage
       run: gcovr --gcov-exclude=".*src.*" -r . --html --html-details -o coverage.html --print-summary
