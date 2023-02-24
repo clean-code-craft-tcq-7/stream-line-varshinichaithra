@@ -1,4 +1,6 @@
+#include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "test-sample.h"
 
@@ -9,9 +11,10 @@ int main(int argc, char* argv[]) {
   }
   if(strncmp(argv[1], "test", strlen("test")) == 0){
       FILE *fp;
+      errno = 0;
       fp = fopen("sample.txt", "r");
       if(fp == NULL){
-         printf("\n File opening failed");
+         printf("\n File opening failed %d", errno);
          return 0;
       }
       TestSensorValue(fp);
