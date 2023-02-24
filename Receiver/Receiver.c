@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
     return 0;
   }
   if(strncmp(argv[1], "test", strlen("test")) == 0){
-      FILE *fp
+      FILE *fp;
       fp = fopen("sample.txt", "r");
       if(fp == NULL){
          printf("\n File opening failed");
