@@ -56,8 +56,7 @@ Sensorvalue packSensorValue(int count, int samples){
 int GetCount(char * string){
     int count = 0;
     char * token = strtok(string, ";");
-    while (token != NULL) {           
-        printf("\nToken no. %d : %s \n", count, token);  
+    while (token != NULL) {            
         token = strtok(NULL, ";");           
         count++;       
     }  
