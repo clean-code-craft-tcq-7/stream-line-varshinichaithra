@@ -25,5 +25,5 @@ float GetmovingAverage(float *list, float *sum, int pos, int len, float nextNum)
 {
    *sum = *sum - list[pos] + nextNum;
    list[pos] = nextNum;
-   return *ptrSum / len;
+   return *sum / len;
 }
