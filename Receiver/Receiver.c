@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "test-sample.h"
 
 int main(int argc, char* argv[]) {
   
@@ -11,7 +12,6 @@ int main(int argc, char* argv[]) {
       TestSensorValue();
       TestMinMax();
       TestMovingAverage();
-  }
-  
+  } 
   return 0;
 }
