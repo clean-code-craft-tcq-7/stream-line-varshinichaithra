@@ -5,7 +5,8 @@
 #include "FileParser.h"
 #include "SensorApplication.h"
 
-void TestSensorValue(FILE *fp){        
+void TestSensorValue(FILE *fp){     
+      int sampleCnt;
       value = fileparser(fp);
       assert(value.nrofSamples == 10);
       assert(value.count == 3);
@@ -21,8 +22,7 @@ void TestSensorValue(FILE *fp){
       }
       for(sampleCnt = 0; sampleCnt < value.count; sampleCnt ++){
            assert(sensor3[sampleCnt] == sampleList[2][sampleCnt]);
-      }
-     
+      }   
 }
 
 void TestMinMax(void){
