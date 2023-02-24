@@ -48,7 +48,7 @@ void TestMovingAverage(void)
   for(idx = 0; idx < nrofsamples; idx++) {
       movingAverage[0][idx] = GetmovingAverage(arrNumbers, &sum, pos, size, sampleList[0][idx]);
       //assert(sensor1movingAverage[idx] == movingAverage[0][idx]);
-      printf("t%f", movingAverage[0][idx]);  
+      printf("\nnew avg = %f, %f", movingAverage[0][idx], sampleList[0][idx]);  
       pos++;
       if (pos >= size){
         pos = 0;
