@@ -8,22 +8,6 @@ int main(int argc, char* argv[]) {
     return 0;
   }
   if(strncmp(argv[1], "test", strlen("test")) == 0){
-      FILE* fp;
-      fp = fopen("sample1.txt", "w+");
-      if(fp == NULL){
-         printf("\n file open failure");
-      }
-     else{
-        printf("\n file open success");
-      }
-    
-      fp = fopen("sample.txt", "r");
-      if(fp == NULL){
-         printf("\n file open failure");
-      }
-     else{
-        printf("\n file open success");
-      }
       TestSensorValue();
       TestMinMax();
       TestMovingAverage();
