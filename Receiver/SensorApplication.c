@@ -12,7 +12,7 @@ int GetMax(float a, float b){
 //Get Min and max value
 float GetMinMax(float list[], int size, int (*input)(float, float)){
     int i;
-    int num = list[0];
+    float num = list[0];
     for(i = 1; i < size; i++){
         if(input(num, list[i]) == 0){
             num = list[i];
