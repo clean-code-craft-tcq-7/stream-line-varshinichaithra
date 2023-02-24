@@ -8,7 +8,13 @@ int main(int argc, char* argv[]) {
     return 0;
   }
   if(strncmp(argv[1], "test", strlen("test")) == 0){
-      TestSensorValue();
+      FILE *fp
+      fp = fopen("sample.txt", "r");
+      if(fp == NULL){
+         printf("\n File opening failed");
+         return 0;
+      }
+      TestSensorValue(fp);
       TestMinMax();
       TestMovingAverage();
       printf("\n Test receiver workflow");
