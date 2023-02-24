@@ -44,11 +44,10 @@ void TestMovingAverage(void)
   for(idx = 0; idx < nrofsensors; idx++){
      movingAverage[idx] = (float*)calloc(nrofsamples , sizeof(float)); 
   }   
-  float sensor1movingAverage[10] = {5.5, 18.0, 22.0, 19.0, 14.0, 15.0, 16.5, 20.5, 20.5, 23.5};
+  float sensor1movingAverage[10] = {2.2, 7.2, 11.0, 14.8, 16.6, 18.6, 16.0, 18.0, 16.6, 21.7};
   for(idx = 0; idx < nrofsamples; idx++) {
       movingAverage[0][idx] = GetmovingAverage(arrNumbers, &sum, pos, size, sampleList[0][idx]);
-      //assert(sensor1movingAverage[idx] == movingAverage[0][idx]);
-      printf("\nnew avg = %f, %f", movingAverage[0][idx], sampleList[0][idx]);  
+      assert(sensor1movingAverage[idx] == movingAverage[0][idx]);
       pos++;
       if (pos >= size){
         pos = 0;
