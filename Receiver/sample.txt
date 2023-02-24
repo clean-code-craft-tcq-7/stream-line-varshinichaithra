@@ -1,0 +1,14 @@
+Provide Data Range to read streams Range value of max 10
+----------------2023/02/15 09:50:42----------------------------
+Input Data Size: 10
+Temperature;SOC;ChargeRate
+11;69;0.8
+25;66;0.2
+19;25;0.7
+19;42;0.7
+9;30;0.4
+21;69;0.0
+12;36;0.0
+29;32;0.2
+12;26;0.0
+35;31;0.3
