@@ -50,3 +50,27 @@ Sensorvalue packSensorValue(int count, int samples){
     retVal.count = count;
     return retVal;
 }
+
+int GetCount(char * string){
+    int count = 0;
+    char * token = strtok(string, ";");
+    while (token != NULL) {           
+        printf("\nToken no. %d : %s \n", count, token);  
+        token = strtok(NULL, ";");           
+        count++;       
+    }  
+    return count;
+}
+
+int GetValue(char * string, int *paramArray, float **list){
+    int count = 0;
+    char * token = strtok(string, ";");
+    while (token != NULL) {           
+        list[count][paramArray[count]] = atof(token);
+        token = strtok(NULL, ";");     
+        paramArray[count] ++;
+        count++; 
+    }  
+    return count;
+}
+
