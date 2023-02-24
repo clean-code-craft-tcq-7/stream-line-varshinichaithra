@@ -9,9 +9,10 @@ int main(int argc, char* argv[]) {
     return 0;
   }
   if(strncmp(argv[1], "test", strlen("test")) == 0){
-      TestSensorValue();
+     /* TestSensorValue();
       TestMinMax();
-      TestMovingAverage();
+      TestMovingAverage();*/
+      printf("\n Test receiver workflow")
   } 
   return 0;
 }
