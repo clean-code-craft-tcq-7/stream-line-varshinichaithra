@@ -32,7 +32,7 @@ jobs:
       run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o receiver Receiver/*.c
       
     - name: run test 
-      run: ./receiver sample.txt
+      run: ./receiver test
       
     - name: collect coverage
       run: gcovr --gcov-exclude=".*src.*" -r . --html --html-details -o coverage.html --print-summary
