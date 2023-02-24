@@ -9,7 +9,7 @@ float **sampleList;
 
 Sensorvalue fileparser(FILE *fp){
   size_t len;
-  size_t read;
+  int read;
   int count = 0;
   int nrofSamples = 0;
   int idx;
@@ -32,7 +32,7 @@ Sensorvalue fileparser(FILE *fp){
       count = GetCount(lineptr); 
   }
   paramArray = (int*) calloc(count, sizeof(int));
-  sampleList = calloc(count, sizeof(float*));
+  sampleList = (float**)calloc(count, sizeof(float*));
   for(idx = 0; idx < count; idx++){
      sampleList[idx] = (float*)calloc(nrofSamples , sizeof(float)); 
   }
