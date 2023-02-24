@@ -7,7 +7,7 @@
 
 void TestSensorValue(FILE *fp){     
       int sampleCnt;
-      value = fileparser(fp);
+      Sensorvalue value = fileparser(fp);
       assert(value.nrofSamples == 10);
       assert(value.count == 3);
       //Test input
