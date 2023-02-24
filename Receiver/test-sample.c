@@ -5,33 +5,24 @@
 #include "FileParser.h"
 #include "SensorApplication.h"
 
-void TestSensorValue(void){
-      FILE *fp;
-      int sampleCnt;
-      Sensorvalue value;
-      fp = fopen("sample.txt", "r");
-      if(fp == NULL){
-         printf("\n File opening failure");
-      }    
-      else
-      {           
-            value = fileparser(fp);
-            assert(value.nrofSamples == 10);
-            assert(value.count == 3);
-            //Test input
-            float sensor1[10] = {11.0, 25.0, 19.0, 19.0, 9.0, 21.0, 12.0, 29.0, 12.0, 35.0};
-            float sensor2[10] = {69.0, 66.0, 25.0, 42.0, 30.0, 69.0, 36.0, 32.0, 26.0, 31.0};
-            float sensor3[10] = {0.8, 0.2, 0.7, 0.7, 0.4, 0.0, 0.0, 0.2, 0.0, 0.3};   
-            for(sampleCnt = 0; sampleCnt < value.nrofSamples; sampleCnt ++){
-                 assert(sensor1[sampleCnt] == sampleList[0][sampleCnt]);
-            }
-            for(sampleCnt = 0; sampleCnt < value.nrofSamples; sampleCnt ++){
-                 assert(sensor2[sampleCnt] == sampleList[1][sampleCnt]);
-            }
-            for(sampleCnt = 0; sampleCnt < value.count; sampleCnt ++){
-                 assert(sensor3[sampleCnt] == sampleList[2][sampleCnt]);
-            }
+void TestSensorValue(FILE *fp){        
+      value = fileparser(fp);
+      assert(value.nrofSamples == 10);
+      assert(value.count == 3);
+      //Test input
+      float sensor1[10] = {11.0, 25.0, 19.0, 19.0, 9.0, 21.0, 12.0, 29.0, 12.0, 35.0};
+      float sensor2[10] = {69.0, 66.0, 25.0, 42.0, 30.0, 69.0, 36.0, 32.0, 26.0, 31.0};
+      float sensor3[10] = {0.8, 0.2, 0.7, 0.7, 0.4, 0.0, 0.0, 0.2, 0.0, 0.3};   
+      for(sampleCnt = 0; sampleCnt < value.nrofSamples; sampleCnt ++){
+           assert(sensor1[sampleCnt] == sampleList[0][sampleCnt]);
       }
+      for(sampleCnt = 0; sampleCnt < value.nrofSamples; sampleCnt ++){
+           assert(sensor2[sampleCnt] == sampleList[1][sampleCnt]);
+      }
+      for(sampleCnt = 0; sampleCnt < value.count; sampleCnt ++){
+           assert(sensor3[sampleCnt] == sampleList[2][sampleCnt]);
+      }
+     
 }
 
 void TestMinMax(void){
@@ -54,7 +45,7 @@ void TestMovingAverage(void)
      movingAverage[idx] = (float*)calloc(nrofsamples , sizeof(float)); 
   }   
   float sensor1movingAverage[10] = {5.5, 18.0, 22.0, 19.0, 14.0, 15.0, 16.5, 20.5, 20.5, 23.5};
-  for(idx = 0; idx < 10; idx++) {
+  for(idx = 0; idx < nrofsamples; idx++) {
       movingAverage[0][idx] = GetmovingAverage(arrNumbers, &sum, pos, size, sampleList[0][idx]);
       assert(sensor1movingAverage[idx] == movingAverage[0][idx]);
       pos++;
