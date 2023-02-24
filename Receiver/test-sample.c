@@ -39,18 +39,18 @@ void TestMinMax(void){
 void TestMovingAverage(void)
 {
   int idx;    
-  float* arrNumbers = (float*)calloc(5, sizeof(float));
   int pos = 0;
   float sum = 0;
-  int size = sizeof(arrNumbers) / sizeof(float);
+  int size = 5;
   int nrofsensors = 3;
-  int nrofsamples = 10;    
+  int nrofsamples = 10; 
+  float* arrNumbers = (float*)calloc(5, sizeof(float));    
 
-  float **movingAverage = calloc(nrofsensors, sizeof(float*));
+  float **movingAverage = (float**)calloc(nrofsensors, sizeof(float*));
   for(idx = 0; idx < nrofsensors; idx++){
      movingAverage[idx] = (float*)calloc(nrofsamples , sizeof(float)); 
   }   
-  float sensor1movingAverage[10] = {5.5, 18.0, 22.0, 19.0, 14.0, 15.0, 16.5, 20.5, 20.5 23.5};
+  float sensor1movingAverage[10] = {5.5, 18.0, 22.0, 19.0, 14.0, 15.0, 16.5, 20.5, 20.5, 23.5};
   for(idx = 0; idx < 10; idx++) {
       movingAverage[0][idx] = GetmovingAvg(arrNumbers, &sum, pos, size, sampleList[0][idx]);
       assert(sensor1movingAverage[idx] == movingAverage[0][idx]);
