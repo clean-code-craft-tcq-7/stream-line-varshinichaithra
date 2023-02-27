@@ -32,14 +32,12 @@ void TestMinMax(void){
     assert(GetMinMax(sampleList[0], 10, GetMax) == 35.0);
 }
 
-void TestMovingAverage(void)
+void TestMovingAverage(int nrofsensors, int nrofsamples)
 {
   int idx;    
   int pos = 0;
   float sum = 0;
   int size = 5;
-  int nrofsensors = 3;
-  int nrofsamples = 10; 
   float* arrNumbers = (float*)calloc(5, sizeof(float));    
 
   float **movingAverage = (float**)calloc(nrofsensors, sizeof(float*));
@@ -57,7 +55,7 @@ void TestMovingAverage(void)
    } 
 
    //free memory
-   for(idx = 0; idx < nrofsamples; idx++){
+   for(idx = 0; idx < nrofsensors; idx++){
       free(movingAverage[idx]);
    }
    free(movingAverage);

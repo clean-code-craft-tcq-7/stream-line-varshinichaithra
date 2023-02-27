@@ -6,6 +6,6 @@
 
 Sensorvalue TestSensorValue(FILE *fp);
 void TestMinMax(void);
-void TestMovingAverage(void);
+void TestMovingAverage(int nrofsensors, int nrofsamples);
 
 #endif
