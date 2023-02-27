@@ -34,6 +34,9 @@ jobs:
     - name: run test 
       run: ./receiver test
       
+    - name: run application 
+      run: ./receiver application -p
+      
     - name: collect coverage
       run: gcovr --gcov-exclude=".*test.*"  --gcov-exclude=".*Receiver.*" -r . --html --html-details -o coverage.html --print-summary
 

@@ -7,24 +7,26 @@
 #include "SensorApplication.h"
 #include "test-sample.h"
 
-int main(int argc, char* argv[]) {  
-  if(argc < 2)
+int main(int argc, char* argv[]) {
+
+    if(argc < 2)
     {
         printf("\n./* [option]");
         return 0;
     }
     if(strncmp(argv[1], "test", strlen("test")) == 0)
     {
-        FILE *fp;
-        errno = 0;
         Sensorvalue value;
         int sensorCnt;
+        FILE *fp;
+        errno = 0;
         fp = fopen("sample.txt", "r");
         if(fp == NULL)
         {
             printf("\n File opening failed %d", errno);
             return 0;
         }
+
         value = TestSensorValue(fp);
         TestMinMax();
         TestMovingAverage();
@@ -36,17 +38,27 @@ int main(int argc, char* argv[]) {
             free(sampleList[sensorCnt]);
         }
         free(sampleList);
+        fclose(fp);
     }
     else if(strncmp(argv[1], "application", strlen("application")) == 0)
     {
         Sensorvalue value;
         int sensorCnt, sampleCnt;
+        FILE *fp;
+        errno = 0;
+        fp = fopen("sample.txt", "r");
+        if(fp == NULL)
+        {
+           printf("\n File opening failed %d", errno);
+           return 0;
+        }
+
         float* arrNumbers = (float*) calloc(5, sizeof(float));
         int pos = 0;
         float sum = 0;
         int size = 5;
 
-        value = fileparser(stdin);
+        value = fileparser(fp);
         float *min = (float*) calloc(value.count, sizeof(float));
         float *max = (float*) calloc(value.count, sizeof(float));
         //Get min max
@@ -56,7 +68,7 @@ int main(int argc, char* argv[]) {
             max[sensorCnt] = GetMinMax(sampleList[sensorCnt], value.nrofSamples, GetMax);
         }
 
-        float **movingAverage = calloc(value.count, sizeof(float*));
+        float **movingAverage = (float**)calloc(value.count, sizeof(float*));
         for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
         {
             movingAverage[sensorCnt] = (float*) calloc(value.nrofSamples, sizeof(float));
@@ -121,6 +133,7 @@ int main(int argc, char* argv[]) {
             free(movingAverage[sensorCnt]);
         }
         free(movingAverage);
+		fclose(fp);
   }
   else{
       //Do nothing
