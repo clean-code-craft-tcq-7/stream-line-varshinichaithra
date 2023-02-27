@@ -6,44 +6,62 @@
 
 int *paramArray;
 float **sampleList;
+char *lineptr = NULL;
 
 Sensorvalue fileparser(FILE *fp){
   size_t len;
-  int read;
+  int idx;
   int count = 0;
   int nrofSamples = 0;
-  int idx;
-  char *lineptr = NULL;
+  Sensorvalue value;
     
-  if((read = getline(&lineptr, &len, fp)) != -1){
-    //Read summary
-  }  
-  if((read = getline(&lineptr, &len, fp)) != -1){
-     //Read date and time  
-  }
-  if((read = getdelim(&lineptr, &len, ':', fp)) != -1){
-       //Read nr of samples
-  } 
-  if((read = getdelim(&lineptr, &len, '\n', fp)) != -1){
-      nrofSamples = atoi(lineptr);
-  } 
-  //Read paramters
-  if((read = getline(&lineptr, &len, fp)) != -1){
-      count = GetCount(lineptr); 
-  }
+  //Read summary
+  getline(&lineptr, &len, fp);
+  //Read date and time
+  getline(&lineptr, &len, fp);
+  //Read nr of samples
+  getdelim(&lineptr, &len, ':', fp);
+  //Get header
+  value = GetHeader(fp);
+  //allocate memory
   paramArray = (int*) calloc(count, sizeof(int));
   sampleList = (float**)calloc(count, sizeof(float*));
   for(idx = 0; idx < count; idx++){
      sampleList[idx] = (float*)calloc(nrofSamples , sizeof(float)); 
   }
-  //get value 
-  for(idx = 0; idx < nrofSamples; idx++){
-     if((read = getline(&lineptr, &len, fp)) != -1){ 
-        GetValue(lineptr, paramArray, sampleList);  
-     }
-  }
-  free(lineptr);
-  return packSensorValue(count, nrofSamples);   
+  GetSamples(fp, value.nrofSamples);
+  return value;
+}
+
+Sensorvalue GetHeader(FILE *fp){
+    int count = 0;
+    int nrofSamples = 0;
+    size_t len;
+    int read;
+    if((read = getdelim(&lineptr, &len, '\n', fp)) != -1){
+      nrofSamples = atoi(lineptr);
+    }
+    //Read paramters
+    if((read = getline(&lineptr, &len, fp)) != -1){
+      count = GetCount(lineptr);
+    }
+    return packSensorValue(count, nrofSamples);
+}
+
+int GetSamples(FILE *fp, int nrofSamples){
+    int idx;
+    size_t len;
+    int read;
+    //get value
+    for(idx = 0; idx < nrofSamples; idx++){
+       if((read = getline(&lineptr, &len, fp)) != -1){
+          GetValue(lineptr, paramArray, sampleList);
+       }
+       else{
+           return 0;
+       }
+    }
+    return 1;
 }
 
 Sensorvalue packSensorValue(int count, int samples){

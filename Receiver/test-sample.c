@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "test-sample.h"
-#include "FileParser.h"
 #include "SensorApplication.h"
+#include "FileParser.h"
+#include "test-sample.h"
 
-void TestSensorValue(FILE *fp){     
+
+Sensorvalue TestSensorValue(FILE *fp){
       int sampleCnt;
       Sensorvalue value = fileparser(fp);
       assert(value.nrofSamples == 10);
@@ -22,7 +23,8 @@ void TestSensorValue(FILE *fp){
       }
       for(sampleCnt = 0; sampleCnt < value.count; sampleCnt ++){
            assert(sensor3[sampleCnt] == sampleList[2][sampleCnt]);
-      }   
+      }
+      return value;
 }
 
 void TestMinMax(void){
@@ -53,4 +55,10 @@ void TestMovingAverage(void)
         pos = 0;
       }
    } 
+
+   //free memory
+   for(idx = 0; idx < nrofsamples; idx++){
+      free(movingAverage[idx]);
+   }
+   free(movingAverage);
 }

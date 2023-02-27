@@ -1,6 +1,7 @@
 
 #include "SensorApplication.h"
 
+
 int GetMin(float a, float b){
     return (a < b);
 }

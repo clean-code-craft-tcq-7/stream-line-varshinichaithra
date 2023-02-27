@@ -1,8 +1,10 @@
 #ifndef TEST_SAMPLE_H_
 #define TEST_SAMPLE_H_
-#include <stdio.h>
 
-void TestSensorValue(FILE*);
+#include <stdio.h>
+#include "SensorApplication.h"
+
+Sensorvalue TestSensorValue(FILE *fp);
 void TestMinMax(void);
 void TestMovingAverage(void);
 
