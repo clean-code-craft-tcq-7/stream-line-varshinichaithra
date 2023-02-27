@@ -20,8 +20,8 @@ Sensorvalue RxApplication(FILE *fp)
 int RxApplication_MinMax(int nrofsamples, int count){
 
     int sensorCnt;
-    min = (float)calloc(count, sizeof(float));
-    max = (float)calloc(count, sizeof(float));
+    min = (float*)calloc(count, sizeof(float));
+    max = (float*)calloc(count, sizeof(float));
     //Get min max
     for(sensorCnt = 0; sensorCnt < count; sensorCnt++)
     {
