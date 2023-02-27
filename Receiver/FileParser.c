@@ -22,8 +22,8 @@ Sensorvalue fileparser(FILE *fp){
   //Get header
   value = GetHeader(fp);
   //allocate memory
-  paramArray = (int*) calloc(count, sizeof(int));
-  sampleList = (float**)calloc(count, sizeof(float*));
+  paramArray = (int*) calloc(value.count, sizeof(int));
+  sampleList = (float**)calloc(value.count, sizeof(float*));
   for(idx = 0; idx < value.count; idx++){
      sampleList[idx] = (float*)calloc(value.nrofSamples , sizeof(float));
   }
