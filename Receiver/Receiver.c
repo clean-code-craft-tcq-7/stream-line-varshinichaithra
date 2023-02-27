@@ -28,11 +28,10 @@ int main(int argc, char* argv[]) {
         }
 
         value = TestSensorValue(fp);
-		printf("\n Test receiver workflow");
-       /* TestMinMax();
+        TestMinMax();
         TestMovingAverage();
         printf("\n Test receiver workflow");
-        free(lineptr);
+       /* free(lineptr);
         free(paramArray);
         for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
         {
