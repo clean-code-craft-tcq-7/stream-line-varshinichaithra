@@ -11,8 +11,6 @@ char *lineptr = NULL;
 Sensorvalue fileparser(FILE *fp){
   size_t len;
   int idx;
-  int count = 0;
-  int nrofSamples = 0;
   Sensorvalue value;
     
   //Read summary
@@ -26,8 +24,8 @@ Sensorvalue fileparser(FILE *fp){
   //allocate memory
   paramArray = (int*) calloc(count, sizeof(int));
   sampleList = (float**)calloc(count, sizeof(float*));
-  for(idx = 0; idx < count; idx++){
-     sampleList[idx] = (float*)calloc(nrofSamples , sizeof(float)); 
+  for(idx = 0; idx < value.count; idx++){
+     sampleList[idx] = (float*)calloc(value.nrofSamples , sizeof(float));
   }
   GetSamples(fp, value.nrofSamples);
   return value;
