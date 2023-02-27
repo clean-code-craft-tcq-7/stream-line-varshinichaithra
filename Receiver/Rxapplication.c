@@ -1,142 +1,83 @@
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
 #include "FileParser.h"
 #include "SensorApplication.h"
-#include "test-sample.h"
+#include "RxApplication.h"
 
-int main(int argc, char* argv[]) {
+float *min;
+float *max;
+float **movingAverage;
 
-    if(argc < 2)
-    {
-        printf("\n./* [option]");
-        return 0;
-    }
-    if(strncmp(argv[1], "test", strlen("test")) == 0)
-    {
-        Sensorvalue value;
-        int sensorCnt;
-        FILE *fp;
-        errno = 0;
-        fp = fopen("sample.txt", "r");
-        if(fp == NULL)
-        {
-            printf("\n File opening failed %d", errno);
-            return 0;
-        }
-
-        value = TestSensorValue(fp);
-        TestMinMax();
-        TestMovingAverage(value.count, value.nrofSamples);
-        free(lineptr);
-        free(paramArray);
-        for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
-        {
-            free(sampleList[sensorCnt]);
-        }
-        free(sampleList);
-        fclose(fp);
-        printf("\n Test receiver workflow");
-    }
-    else if(strncmp(argv[1], "application", strlen("application")) == 0)
-    {
-        Sensorvalue value;
-        int sensorCnt, sampleCnt;
-        FILE *fp;
-        errno = 0;
-        fp = fopen("sample.txt", "r");
-        if(fp == NULL)
-        {
-           printf("\n File opening failed %d", errno);
-           return 0;
-        }
-
-        float* arrNumbers = (float*) calloc(5, sizeof(float));
-        int pos = 0;
-        float sum = 0;
-        int size = 5;
-
-        value = fileparser(fp);
-        float *min = (float*) calloc(value.count, sizeof(float));
-        float *max = (float*) calloc(value.count, sizeof(float));
-        //Get min max
-        for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
-        {
-            min[sensorCnt] = GetMinMax(sampleList[sensorCnt], value.nrofSamples, GetMin);
-            max[sensorCnt] = GetMinMax(sampleList[sensorCnt], value.nrofSamples, GetMax);
-        }
-
-        float **movingAverage = (float**)calloc(value.count, sizeof(float*));
-        for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
-        {
-            movingAverage[sensorCnt] = (float*) calloc(value.nrofSamples, sizeof(float));
-        }
-        for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
-        {
-            for(sampleCnt = 0; sampleCnt < value.nrofSamples; sampleCnt++)
-            {
-                movingAverage[sensorCnt][sampleCnt] = GetmovingAverage(arrNumbers, &sum, pos,
-                                size, sampleList[sensorCnt][sampleCnt]);
-                pos++;
-                if(pos >= size)
-                {
-                    pos = 0;
-                }
-            }
-        }
-
-        if(strncmp(argv[2], "-p", strlen("-p")) == 0)
-        {
-            printf("\nnrofsample %d, count = %d", value.nrofSamples, value.count);
-            //print sensor values
-            for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
-            {
-                printf("\nParameters %d =  %d\n", sensorCnt, paramArray[sensorCnt]);
-                for(sampleCnt = 0; sampleCnt < value.nrofSamples; sampleCnt++)
-                {
-                    printf("\t%f", sampleList[sensorCnt][sampleCnt]);
-                }
-            }
-            //print min max values
-            for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
-            {
-                printf("\nList = %d, min = %f, max = %f", sensorCnt, min[sensorCnt],
-                                max[sensorCnt]);
-            }
-            //print moving average
-            for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
-            {
-                printf("\nlist %d moving average\n", sensorCnt);
-                for(sampleCnt = 0; sampleCnt < value.nrofSamples; sampleCnt++)
-                {
-                    printf("\t%f", movingAverage[sensorCnt][sampleCnt]);
-                }
-            }
-        }
-
-        //Free memory allocated
-        free(lineptr);
-        free(paramArray);
-        for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
-        {
-            free(sampleList[sensorCnt]);
-        }
-        free(sampleList);
-
-        //Free memory allocated for application
-        free(min);
-        free(max);
-        for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
-        {
-            free(movingAverage[sensorCnt]);
-        }
-        free(movingAverage);
-        fclose(fp);
-  }
-  else{
-      //Do nothing
-  }
-  return 0;
+Sensorvalue RxApplication(FILE *fp)
+{
+    Sensorvalue value;
+    value = fileparser(fp);
+    RxApplication_MinMax(value.nrofSamples, value.count);
+    RxApplication_MovingAvg(value.nrofSamples, value.count);
+    return value;
 }
+
+int RxApplication_MinMax(int nrofsamples, int count){
+
+    int sensorCnt;
+    //Get min max
+    for(sensorCnt = 0; sensorCnt < count; sensorCnt++)
+    {
+        min[sensorCnt] = GetMinMax(sampleList[sensorCnt], nrofsamples, GetMin);
+        max[sensorCnt] = GetMinMax(sampleList[sensorCnt], nrofsamples, GetMax);
+    }
+    return sensorCnt;
+}
+
+int RxApplication_MovingAvg(int nrofsamples, int count){
+
+    int sensorCnt;
+    int sampleCnt;
+    float* arrNumbers = (float*) calloc(5, sizeof(float));
+    int pos = 0;
+    float sum = 0;
+    int size = 5;
+
+    RxApplication_CreateMem(nrofsamples, count);
+
+    for(sensorCnt = 0; sensorCnt < count; sensorCnt++)
+    {
+        for(sampleCnt = 0; sampleCnt < nrofsamples; sampleCnt++)
+        {
+            movingAverage[sensorCnt][sampleCnt] = GetmovingAverage(arrNumbers, &sum, pos,
+                            size, sampleList[sensorCnt][sampleCnt]);
+            pos++;
+            if(pos >= size)
+            {
+                pos = 0;
+            }
+        }
+    }
+    return sensorCnt;
+}
+
+void RxApplication_CreateMem(int nrofsamples, int count){
+
+    int sensorCnt;
+    movingAverage = (float**)calloc(count, sizeof(float*));
+    for(sensorCnt = 0; sensorCnt < count; sensorCnt++)
+    {
+        movingAverage[sensorCnt] = (float*) calloc(nrofsamples, sizeof(float));
+    }
+}
+
+void RxApplication_FreeMem(int count){
+
+    int sensorCnt;
+    //Free memory allocated for application
+    free(min);
+    free(max);
+    for(sensorCnt = 0; sensorCnt < count; sensorCnt++)
+    {
+        free(movingAverage[sensorCnt]);
+    }
+    free(movingAverage);
+
+}
+
+

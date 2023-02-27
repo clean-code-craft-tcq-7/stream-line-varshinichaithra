@@ -13,4 +13,4 @@ jobs:
       run: pip install lizard
 
     - name: Limit complexity
-      run: $HOME/.local/bin/lizard --exclude "./Receiver/test-sample.c"  --exclude "./Receiver/Rxapplication.c" --CCN 5
+      run: $HOME/.local/bin/lizard --exclude "./Receiver/test-sample.c"  --exclude "./Receiver/env.c" --CCN 5
