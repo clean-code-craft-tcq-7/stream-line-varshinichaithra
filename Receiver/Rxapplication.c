@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "FileParser.h"
 #include "SensorApplication.h"
 #include "RxApplication.h"
@@ -44,6 +45,9 @@ int RxApplication_MovingAvg(int nrofsamples, int count){
 
     for(sensorCnt = 0; sensorCnt < count; sensorCnt++)
     {
+        memset(arrNumbers, 0, 5);
+        sum = 0;
+        pos = 0;
         for(sampleCnt = 0; sampleCnt < nrofsamples; sampleCnt++)
         {
             movingAverage[sensorCnt][sampleCnt] = GetmovingAverage(arrNumbers, &sum, pos,
