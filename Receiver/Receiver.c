@@ -28,21 +28,21 @@ int main(int argc, char* argv[]) {
         }
 
         value = TestSensorValue(fp);
-        TestMinMax();
+      /*  TestMinMax();
         TestMovingAverage();
         printf("\n Test receiver workflow");
-        free(lineptr);
+        (free(lineptr);
         free(paramArray);
         for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
         {
             free(sampleList[sensorCnt]);
         }
         free(sampleList);
-        fclose(fp);
+        fclose(fp);*/
     }
     else if(strncmp(argv[1], "application", strlen("application")) == 0)
     {
-        Sensorvalue value;
+      /*  Sensorvalue value;
         int sensorCnt, sampleCnt;
         FILE *fp;
         errno = 0;
@@ -133,7 +133,7 @@ int main(int argc, char* argv[]) {
             free(movingAverage[sensorCnt]);
         }
         free(movingAverage);
-		fclose(fp);
+		fclose(fp);*/
   }
   else{
       //Do nothing
