@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
         TestMinMax();
         TestMovingAverage();
         printf("\n Test receiver workflow");
-        (free(lineptr);
+        free(lineptr);
         free(paramArray);
         for(sensorCnt = 0; sensorCnt < value.count; sensorCnt++)
         {
